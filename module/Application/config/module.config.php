@@ -77,16 +77,6 @@ return array(
         ),
     ),
 
-    'view_helpers'    =>
-    [
-        'invokables' =>
-        [
-            'buildId'     => 'Application\View\Helper\BuildId',
-            'reference'   => 'Application\View\Helper\Reference',
-            'commit'      => 'Application\View\Helper\Commit',
-        ]
-    ],
-    
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,

@@ -40,7 +40,8 @@
     <target name="generate-config">
 
         <!-- ORM -->
-        <loadfile property="db.config" file="${project.basedir}/config/autoload/orm.local.php.dist">
+        <loadfile property="db.config"
+                  file="${project.basedir}/config/autoload/orm.local.php.dist">
             <filterchain>
                 <replacetokens>
                     <token key="host" value="${db.host}"/>
@@ -51,7 +52,8 @@
                 </replacetokens>
             </filterchain>
         </loadfile>
-        <echo msg="${db.config}" file="./config/autoload/orm.local.php"/>
+        <echo msg="${db.config}"
+              file="./config/autoload/orm.local.php"/>
 
     </target>
     

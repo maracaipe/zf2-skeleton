@@ -15,10 +15,10 @@ Feature: User list feature
     
   @cleanup
   Scenario: the user list should have an edit button
-    Given I am on "/user"
-    And I have a stored user with:
+    Given I have a stored user with:
      | Firstname | Frederic |
      | Lastname | Dewinne |
+    And I am on "/user"
     When I follow "Edit"
     Then the response status code should be 200
     And I should see "Frederic"

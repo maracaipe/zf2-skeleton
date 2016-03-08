@@ -12,13 +12,14 @@ Feature: User list feature
     When I follow "Add user"
     Then I should be on "/user/add"
     And the response status code should be 200
-  
+    
+  @cleanup
   Scenario: the user list should have an edit button
     Given I am on "/user"
     And I have a stored user with:
      | Firstname | Frederic |
      | Lastname | Dewinne |
-    When I follow "Edit user"
+    When I follow "Edit"
     Then the response status code should be 200
     And I should see "Frederic"
     And I should see "Dewinne"

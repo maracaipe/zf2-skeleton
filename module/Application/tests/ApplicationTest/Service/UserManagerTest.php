@@ -1,0 +1,43 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: fred
+ * Date: 08/03/16
+ * Time: 11:50
+ */
+
+namespace ApplicationTest\Service;
+
+use Application\Service\UserManager;
+use Doctrine\Common\Collections\ArrayCollection;
+
+class UserManagerTest extends \PHPUnit_Framework_TestCase
+{
+    public function testRepositorySetterReallySetRepositoryProperty()
+    {
+        $userManager = new UserManager();
+        $repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
+        
+        $this->assertSame($userManager, $userManager->setRepository($repository));
+        
+        $this->assertAttributeSame($repository, 'repository', $userManager);
+    }
+    
+    public function testGetListActuallyGetUserListFromDatabase()
+    {
+        $userManager = new UserManager();
+        $repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $userManager->setRepository($repository);
+        $result = new ArrayCollection();
+        
+        $repository->expects($this->once())
+            ->method('findAll')
+            ->willReturn($result);
+        
+        $this->assertSame($result, $userManager->getList());
+    }
+}

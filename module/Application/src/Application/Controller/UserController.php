@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Application\Service\UserManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -16,7 +17,12 @@ class UserController extends AbstractActionController
 {
     public function listAction()
     {
-        return new ViewModel();
+        /** @var UserManager $userManager */
+        $userManager = $this->getServiceLocator()->get('userManager');
+        
+        return new ViewModel([
+            'users' => $userManager->getList()
+        ]);
     }
     
     public function addAction()

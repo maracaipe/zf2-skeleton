@@ -85,7 +85,10 @@ return array(
         ),
         'aliases' => array(
             'entityManager' => 'Doctrine\ORM\EntityManager'
-        )
+        ),
+        'invokables' => [
+            'usermanager' => 'Application\Service\UserManager'
+        ]
     ),
     'translator' => array(
         'locale' => 'en_US',

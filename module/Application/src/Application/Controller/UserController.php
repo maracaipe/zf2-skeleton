@@ -31,4 +31,22 @@ class UserController extends AbstractActionController
     {
         return new ViewModel();
     }
+    
+    public function editAction()
+    {
+        /** @var UserManager $userManager */
+        $userManager = $this->getServiceLocator()->get('userManager');
+        
+        $user = $userManager->get($this->params('id'));
+        
+        if (!$user) {
+            $this->getResponse()->setStatusCode(404);
+        } else {
+            $data = [
+                'user' => $user
+            ];
+            
+            return new ViewModel($data);
+        }
+    }
 }

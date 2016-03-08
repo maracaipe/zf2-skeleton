@@ -21,5 +21,5 @@ Feature: User list feature
     And I am on "/user"
     When I follow "Edit"
     Then the response status code should be 200
-    And I should see "Frederic"
-    And I should see "Dewinne"
+    And the url should match:
+    | /user/ | %temporaryUser% |

@@ -8,6 +8,7 @@
 
 namespace ApplicationTest\Service;
 
+use Application\Entity\User;
 use Application\Service\UserManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -39,6 +40,25 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($result);
         
         $this->assertSame($result, $userManager->getList());
+    }
+    
+    public function testGetActuallyGetAUserFromDatabase()
+    {
+        $userManager = new UserManager();
+        $repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $userManager->setRepository($repository);
+        
+        $result = new User();
+        $id = 42;
+        
+        $repository->expects($this->once())
+            ->method('find')
+            ->with($id)
+            ->willReturn($result);
+        
+        $this->assertSame($result, $userManager->get($id));
     }
 
     /**

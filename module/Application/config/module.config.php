@@ -102,10 +102,11 @@ return array(
         'initializers' => [
             function ($instance, \Zend\ServiceManager\ServiceLocatorInterface $sm) {
                 if ($instance instanceof \Application\Service\UserManager) {
-                    $repository = $sm->get('Doctrine\ORM\EntityManager')
-                        ->getRepository('Application\Entity\User');
+                    $entityManager = $sm->get('Doctrine\ORM\EntityManager');
+                    $repository = $entityManager->getRepository('Application\Entity\User');
                     
-                    $instance->setRepository($repository);
+                    $instance->setRepository($repository)
+                             ->setEntityManager($entityManager);
                 }
             }
         ]

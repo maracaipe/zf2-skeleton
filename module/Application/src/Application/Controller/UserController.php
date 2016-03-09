@@ -39,6 +39,13 @@ class UserController extends AbstractActionController
         
         $user = $userManager->get($this->params('id'));
         
+        if ($this->getRequest()->isPost()) {
+            $user->setFirstname($this->params('Firstname'));
+            $user->setLastname($this->params('Lastname'));
+            $userManager->save($user);
+            $this->flashMessenger()->addSuccessMessage($user->getFirstname() . ' ' . $user->getLastname() . 'has been saved');
+        }
+        
         if (!$user) {
             $this->getResponse()->setStatusCode(404);
         } else {

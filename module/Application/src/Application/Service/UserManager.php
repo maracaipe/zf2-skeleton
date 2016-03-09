@@ -9,6 +9,8 @@
 namespace Application\Service;
 
 
+use Application\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
 class UserManager
@@ -16,10 +18,23 @@ class UserManager
     /** @var  EntityRepository */
     protected $repository;
     
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+    
     public function setRepository(EntityRepository $repository)
     {
         $this->repository = $repository;
         
+        return $this;
+    }
+    
+    /**
+     * @param mixed $entityManager
+     * @return UserManager
+     */
+    public function setEntityManager(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
         return $this;
     }
 
@@ -39,5 +54,11 @@ class UserManager
         }
         
         return $this->repository->find($id);
+    }
+    
+    public function save(User $user)
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
     }
 }

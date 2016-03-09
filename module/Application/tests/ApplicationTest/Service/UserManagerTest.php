@@ -26,6 +26,18 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeSame($repository, 'repository', $userManager);
     }
     
+    public function testEntityManagerSetterReallySetEntityManagerProperty()
+    {
+        $userManager = new UserManager();
+        $entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        
+        $this->assertSame($userManager, $userManager->setEntityManager($entityManager));
+        
+        $this->assertAttributeSame($entityManager, 'entityManager', $userManager);
+    }
+    
     public function testGetListActuallyGetUserListFromDatabase()
     {
         $userManager = new UserManager();
@@ -68,5 +80,25 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $userManager = new UserManager();
         $userManager->getList();
+    }
+    
+    public function testSaveUserActuallySaveInDatabase()
+    {
+        $userManager = new UserManager();
+        $user = new User();
+
+        $entityManager = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        
+        $userManager->setEntityManager($entityManager);
+        
+        $entityManager->expects($this->once())
+            ->id('persist')
+            ->method('persist')
+            ->with($user);
+        $entityManager->expects($this->once())
+            ->after('persist')
+            ->method('flush');
+        
+        $userManager->save($user);
     }
 }

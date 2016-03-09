@@ -30,5 +30,6 @@ Feature: User edition
       | Firstname | newFirstname |
       | Lastname  | newLastname  |
     When I press "Save"
-    Then I should see "newFirstname newLastmane has been saved"
-    And I should be on "/user"
+    Then I should be on "/user"
+    And I should see "newFirstname"
+    And I should see "newLastname"
